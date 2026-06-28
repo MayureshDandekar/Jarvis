@@ -1,5 +1,6 @@
 import pyttsx3
-import speech_recognition as sr  
+import speech_recognition as sr 
+import webbrowser 
 
 engine = pyttsx3.init()
 
@@ -20,14 +21,32 @@ def takeCommand():
         try:
             audio = r.listen(source, timeout=5, phrase_time_limit=5)
             print("Recognising...")
-            query = r.recognize_google(audio, language="en-in")
+            query = r.recognize_google(audio, language="en-in").lower()
             print(f"You said {query}")
             return query
         except Exception as e:
             print("Could not understand, please say again")
             return "none"
 
-takeCommand()
+
+
+def openWebsite(query):
+    if "youtube" in query:
+        webbrowser.open("https://www.youtube.com")
+        speak("Opening youtube")
+    elif "google" in query:
+        webbrowser.open("https://www.google.com")
+        speak("Opening google")
+    elif "github" in query:
+        webbrowser.open("https://www.github.com")
+        speak("Opening github")
+    else:
+        speak("Website not found")
+
+query = takeCommand()
+if query != "none":
+    openWebsite(query)
+
 
 
 
