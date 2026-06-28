@@ -2,6 +2,7 @@ import pyttsx3
 import speech_recognition as sr 
 import webbrowser 
 import music_library
+import requests
 
 
 def speak(text):
@@ -56,6 +57,16 @@ def playMusic(query):
 
 
 
+def fetchnews():
+    url = "https://newsapi.org/v2/top-headlines?language=en&category=technology&apiKey=927a717a117b43b6bc22478e1f276d13"
+    response = requests.get(url)
+    news = response.json()
+    # print(news)
+    articles = news["articles"]
+    for i, article in enumerate(articles[:5]):
+        print(f"{i+1}. {article['title']}")
+        speak(article["title"])
+
 
 query = takeCommand()
 if query != "none":
@@ -63,6 +74,8 @@ if query != "none":
         openWebsite(query)
     elif "play" in query:
         playMusic(query)
+    elif "news" in query:
+        fetchnews()
 
 
 
