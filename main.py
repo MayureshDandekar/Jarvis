@@ -13,6 +13,7 @@ def speak(text):
 speak("Initializing Jarvis")
 
 
+
 def takeCommand():
     r = sr.Recognizer()
     with sr.Microphone() as source:
@@ -57,7 +58,7 @@ def playMusic(query):
 
 
 
-def fetchnews():
+def fetchNews():
     url = "https://newsapi.org/v2/top-headlines?language=en&category=technology&apiKey=927a717a117b43b6bc22478e1f276d13"
     response = requests.get(url)
     news = response.json()
@@ -68,14 +69,23 @@ def fetchnews():
         speak(article["title"])
 
 
-query = takeCommand()
-if query != "none":
-    if "open" in query:
-        openWebsite(query)
-    elif "play" in query:
-        playMusic(query)
-    elif "news" in query:
-        fetchnews()
+
+while True:
+    
+    query = takeCommand()
+    if "jarvis" in query:
+        speak("Yes, how can I help you?")
+        command = takeCommand()
+        if command != "none":
+            if "open" in command:
+                openWebsite(command)
+            elif "play" in command:
+                playMusic(command)
+            elif "news" in command:
+                fetchNews()
+        else :
+            speak("I didn't catch that, say Jarvis to try again")
 
 
 
+ 
