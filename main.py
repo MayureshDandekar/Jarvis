@@ -4,6 +4,11 @@ import webbrowser
 import music_library
 import requests
 
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 
 def speak(text):
     engine = pyttsx3.init()
@@ -59,7 +64,8 @@ def playMusic(query):
 
 
 def fetchNews():
-    url = "https://newsapi.org/v2/top-headlines?language=en&category=technology&apiKey=927a717a117b43b6bc22478e1f276d13"
+    api_key = os.getenv("NEWS_API_KEY")
+    url = f"https://newsapi.org/v2/top-headlines?language=en&category=technology&apiKey={api_key}"
     response = requests.get(url)
     news = response.json()
     # print(news)
